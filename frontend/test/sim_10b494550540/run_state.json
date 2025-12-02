@@ -1,0 +1,718 @@
+{
+  "simulation_id": "sim_10b494550540",
+  "runner_status": "failed",
+  "current_round": 52,
+  "total_rounds": 672,
+  "simulated_hours": 0,
+  "total_simulation_hours": 168,
+  "progress_percent": 7.7,
+  "twitter_running": false,
+  "reddit_running": false,
+  "twitter_actions_count": 507,
+  "reddit_actions_count": 468,
+  "total_actions_count": 975,
+  "started_at": "2025-12-02T16:05:31.956152",
+  "updated_at": "2025-12-02T16:27:15.926426",
+  "completed_at": "2025-12-02T16:29:24.213950",
+  "error": "进程退出码: -15, 错误: 照片分析（经过隐私处理）、病理与皮肤表现对比图、指南与循证资料链接，以及面向非专业公众的通俗化解释。互动风格偏向教育性与纠正性，遇到错误信息或过度解读时会以专业语气驳斥并附带证据，但尽量避免与个人进行互怼。语言特点是专业而不艰涩，常以“循证”、“临床证据”、“鉴别诊断”为关键词，喜欢用类比与实例帮助公众理解。立场观点：对待争议性事件坚持以医学证据为准，不被情绪化舆论左右，认为医学鉴定应独立于政治与舆论压力。对性别平等与受害者保护持支持态度，但同时强调不能以道德直觉替代医学与法律证据，反对未审先判与网络暴力。可能被激怒的内容包括无端诋毁医学职业信誉、断章取义的医学结论引用、以及以匿名来源散布关于病情与诊断的虚假信息；可能被感动的内容为基于证据的正义伸张、对医学事实的尊重以及对无辜当事人的公开澄清与道歉。独特特征：常用口头禅是“让数据说话”，习惯在公开发言中强调“要分清病理与行为学的界限”；业余爱好包括古典文学阅读、山地徒步與摄影，喜欢在闲暇时以影像记录医疗人文瞬间。个人记忆：在肖某某事件中，他与四位同行组成的专家组接受司法与高校委托，集中分析了相关视频、临床影像与皮肤学表现，基于多年对外生殖器皮肤病的认识与典型抓挠动作学的观察，联合出具专业论证，结论指出动作特征更符合皮肤病抓挠并排除了医学上支持性骚扰的可能性。在庭审与部分媒体报道中，该专家多次以详尽的医学解释驳斥了片面解读，接受过若干主流媒体的采访并在微博与知乎上发布科普长文，旨在将复杂的医学鉴定过程公开透明化，减少公众误读。他记得在撰写论证时对每一帧影像进行了逐帧分析，并与皮肤科、法医同道反复讨论以确保结论的稳健性；尽管因此遭遇部分网络质疑，但他更看重在专业渠道中为当事人和司法提供可检验的医学证据，并推动相关机构依法依规处理事件与对当事人的合理帮扶。总体而言，该人设是一个以事实为先、对公众负责且在社会争议中坚持专业独立性的医学专家，他在社交媒体上的存在主要是为了用医学知识缓解误解、引导理性讨论并维护医学与司法判断的权威性。', 'mbti': 'ISTJ', 'gender': 'male', 'age': 52, 'country': '中国'}\n2025-12-02 16:05:45,400 - root - WARNING - Invalid or missing `max_tokens` in `model_config_dict`. Defaulting to 999_999_999 tokens.\n[16:05:45] [Twitter] 环境已启动\n[16:05:45] [Reddit] 环境已启动\n[16:05:45] [Twitter] 已发布 1 条初始帖子\nSome weights of BertModel were not initialized from the model checkpoint at Twitter/twhin-bert-base and are newly initialized: ['pooler.dense.bias', 'pooler.dense.weight']\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.\n[16:05:49] [Reddit] 已发布 1 条初始帖子\nBertSdpaSelfAttention is used but `torch.nn.functional.scaled_dot_product_attention` does not support non-absolute `position_embedding_type` or `output_attentions=True` or `head_mask`. Falling back to the manual attention implementation, but specifying the manual implementation will be required from Transformers version v5.0.0 onwards. This warning can be removed using the argument `attn_implementation=\"eager\"` when loading the model.\n[16:10:38] [Twitter] Day 1, 09:00 - Round 40/672 (6.0%)\n[16:11:35] [Reddit] Day 1, 09:00 - Round 40/672 (6.0%)\n",
+  "process_pid": 17767,
+  "recent_actions": [
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.933889",
+      "platform": "twitter",
+      "agent_id": 49,
+      "agent_name": "Agent_49",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 67,
+        "new_post_id": 424
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.931192",
+      "platform": "twitter",
+      "agent_id": 49,
+      "agent_name": "Agent_49",
+      "action_type": "FOLLOW",
+      "action_args": {
+        "follow_id": 39
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.919857",
+      "platform": "twitter",
+      "agent_id": 30,
+      "agent_name": "Agent_30",
+      "action_type": "FOLLOW",
+      "action_args": {
+        "follow_id": 38
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.917625",
+      "platform": "twitter",
+      "agent_id": 30,
+      "agent_name": "Agent_30",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 118,
+        "new_post_id": 423
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.907669",
+      "platform": "twitter",
+      "agent_id": 15,
+      "agent_name": "Agent_15",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 199,
+        "new_post_id": 422
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.905450",
+      "platform": "twitter",
+      "agent_id": 32,
+      "agent_name": "Agent_32",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 67,
+        "new_post_id": 421
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.895446",
+      "platform": "twitter",
+      "agent_id": 12,
+      "agent_name": "Agent_12",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 345,
+        "new_post_id": 420
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.893212",
+      "platform": "twitter",
+      "agent_id": 36,
+      "agent_name": "Agent_36",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 45,
+        "new_post_id": 419
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.882267",
+      "platform": "twitter",
+      "agent_id": 40,
+      "agent_name": "Agent_40",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 24,
+        "new_post_id": 418
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.879611",
+      "platform": "twitter",
+      "agent_id": 73,
+      "agent_name": "Agent_73",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 28,
+        "new_post_id": 417
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.868861",
+      "platform": "twitter",
+      "agent_id": 60,
+      "agent_name": "Agent_60",
+      "action_type": "LIKE_POST",
+      "action_args": {
+        "post_id": 345,
+        "like_id": 36
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.866560",
+      "platform": "twitter",
+      "agent_id": 6,
+      "agent_name": "Agent_6",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 70,
+        "new_post_id": 416
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.855761",
+      "platform": "twitter",
+      "agent_id": 18,
+      "agent_name": "Agent_18",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 367,
+        "new_post_id": 415
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.853139",
+      "platform": "twitter",
+      "agent_id": 27,
+      "agent_name": "Agent_27",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 345,
+        "new_post_id": 414
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.841835",
+      "platform": "twitter",
+      "agent_id": 22,
+      "agent_name": "Agent_22",
+      "action_type": "CREATE_POST",
+      "action_args": {
+        "content": "清博大数据实时监测：当前平台暂无新增可核验的高校“程序正义”与校园安全舆情条目。我们将继续基于多平台文本与传播路径开展动态追踪与影响力评估，按既定样本口径与证据链发布可复核监测快报与可视化报告。欢迎媒体、当事方或知情者私信并附可核验材料（来源、时间、原始记录）；经专业流程核验后我们将在第一时间更新监测结果并公开方法与数据口径。——清博大数据_367",
+        "post_id": 413
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.839111",
+      "platform": "twitter",
+      "agent_id": 84,
+      "agent_name": "Agent_84",
+      "action_type": "FOLLOW",
+      "action_args": {
+        "follow_id": 37
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.826725",
+      "platform": "twitter",
+      "agent_id": 90,
+      "agent_name": "Agent_90",
+      "action_type": "CREATE_POST",
+      "action_args": {
+        "content": "虽然当前没有新贴，我不会沉默。接下来我会：1）继续推进向学校与独立机构提交公开调查与审查的申请；2）与法律顾问、校友代表沟通，争取透明答辩与查证流程；3）请知情者通过私信或安全渠道提供线索与证据（我会严格保护信息源）。我要把事实说清楚，给大家一个交代。#透明调查 #学术诚信",
+        "post_id": 412
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.824584",
+      "platform": "twitter",
+      "agent_id": 84,
+      "agent_name": "Agent_84",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 137,
+        "new_post_id": 411
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.811048",
+      "platform": "twitter",
+      "agent_id": 67,
+      "agent_name": "Agent_67",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 30,
+        "new_post_id": 410
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.806706",
+      "platform": "twitter",
+      "agent_id": 10,
+      "agent_name": "Agent_10",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 110,
+        "new_post_id": 409
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.791975",
+      "platform": "twitter",
+      "agent_id": 19,
+      "agent_name": "Agent_19",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 28,
+        "new_post_id": 408
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.789365",
+      "platform": "twitter",
+      "agent_id": 65,
+      "agent_name": "Agent_65",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 345,
+        "new_post_id": 407
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.772053",
+      "platform": "twitter",
+      "agent_id": 86,
+      "agent_name": "Agent_86",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 314,
+        "new_post_id": 406
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.769307",
+      "platform": "twitter",
+      "agent_id": 25,
+      "agent_name": "Agent_25",
+      "action_type": "CREATE_POST",
+      "action_args": {
+        "content": "核验进展通报｜关于“高校程序正义”深度复盘：我们已完成第一轮证据核验，发现部分线索与校方通报存在出入，已联系相关律师核实。24小时内将发布核验汇总与初步建议。再次提醒：请勿传播未经核实的个人隐私或指控；当事人/知情人请私信并尽量附证据（支持匿名与脱敏处理）。律师、权威机构或校方可私信协作核验。#高校舆情 #程序正义",
+        "post_id": 405
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.748383",
+      "platform": "twitter",
+      "agent_id": 13,
+      "agent_name": "Agent_13",
+      "action_type": "FOLLOW",
+      "action_args": {
+        "follow_id": 36
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.745008",
+      "platform": "twitter",
+      "agent_id": 69,
+      "agent_name": "Agent_69",
+      "action_type": "CREATE_POST",
+      "action_args": {
+        "content": "本刊声明：我们将持续关注与高校治理、校园安全及“程序正义”相关议题。依据新闻职业规范与数据监测方法，本刊欢迎向本账号私信提交可核验的原始资料或官方回函；涉及个人隐私的线索将依法保护。请公众对未经核实的信息保持审慎转发，本刊将在核实后及时发布进展与数据解读。#教育舆情 #事实核查",
+        "post_id": 404
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.718303",
+      "platform": "twitter",
+      "agent_id": 47,
+      "agent_name": "Agent_47",
+      "action_type": "QUOTE_POST",
+      "action_args": {
+        "quoted_id": 386,
+        "new_post_id": 403
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 52,
+      "timestamp": "2025-12-02T16:27:13.715837",
+      "platform": "twitter",
+      "agent_id": 41,
+      "agent_name": "Agent_41",
+      "action_type": "CREATE_POST",
+      "action_args": {
+        "content": "武汉大学官方通告：本账号坚持事实为本、程序正义与依法依规处理原则。对于社会关切的高校程序正义、治理问题，学校已启动规范化核查流程。欢迎知情者通过本账号私信并附可核验证据（时间、地点、截图或官方通知等），我们将按纪检、法务与相关部门程序核实，并在核实后依法依规向社会公布处理进展。对涉及个人隐私或调查细节的材料，我们将严格保护相关当事人权益。感谢社会各界监督与配合。— 武汉大学官方账号",
+        "post_id": 402
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.139747",
+      "platform": "reddit",
+      "agent_id": 82,
+      "agent_name": "Agent_82",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "作为一线高校辅导员，我支持本社呼吁“公开、可核验、独立复核”的五项方向，并愿就落地工作协助：\n1）若您掌握可核验线索，请私信或发邮件至 studentaffairs@whu.edu.cn（可申请匿名化处理），提交时务必注明时间线、证据类型（截图/录音/视频/邮件/聊天记录/证人等）、来源与获取方式，以及是否同意匿名化并移交第三方核验；\n2）我可协助对来稿做形式审查、匿名化处理并移交校内法务与教育主...",
+        "comment_id": 290
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.131962",
+      "platform": "reddit",
+      "agent_id": 86,
+      "agent_name": "Agent_86",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "【权威提示】本台关注有关证据收集与复核的讨论。为便于核验并保护当事人隐私，建议如下：\n1）请掌握可核验证据者优先通过学校指定通道或本平台私信提交（可匿名或加密），并在提交时尽量标注：事件时间线、地点、证据类型（截图/音/视频/文件/聊天记录等）、来源与获取方式，以及是否同意匿名处理；\n2）提交原始文件或可核验的哈希值（如SHA‑256）以便技术比对，若为音视频请一并提交元数据或生成链路；\n3）学校...",
+        "comment_id": 289
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.130930",
+      "platform": "reddit",
+      "agent_id": 81,
+      "agent_name": "Agent_81",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "本账号支持呼吁并提供线索提交模版与注意事项，便于核验与保全：\n1) 事件时间线：尽量精确到日期/时段；\n2) 证据形式：截屏/录音/视频/文档/邮件/聊天记录/证人联系方式等；\n3) 获取方式与来源：说明何时何地如何获取；\n4) 电子证据要求：如有原始文件请一并提交并附SHA‑256哈希值或带时间戳的导出；如无法提交原件，请说明保存与转交链路；\n5) 隐私与授权：是否同意匿名处理？是否同意将材料提...",
+        "comment_id": 288
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.123257",
+      "platform": "reddit",
+      "agent_id": 49,
+      "agent_name": "Agent_49",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "我是校友_526，武汉大学校友，现任教育政策研究员与校友会志愿者。支持本次呼吁，补充并提出可操作的优先步奏：\n\n1) 立即建立加密受理通道（校方官方邮箱+第三方上传门户），48小时内确认收到线索并告知是否匿名处理与受理方式；\n2) 7日内公布可公开的证据清单与初步工作计划（并说明不可公开部分的法律/隐私依据与预计时限）；\n3) 立刻启用chain-of-custody模版（含时间线、采集设备/人员...",
+        "comment_id": 287
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.122232",
+      "platform": "reddit",
+      "agent_id": 67,
+      "agent_name": "Agent_67",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "支持委员会的程序化建议，并补充统一联署与证据提交流程（请大家配合）：\n\n1）在本帖下评论“联署＋所在城市/身份”（例如：联署·外省考生）；\n2）私信或发邮件至 studentaffairs@whu.edu.cn 并私信我，提交材料请包含：\n   a）事件时间线（精确到日期与时段，越详细越好）；\n   b）证据类型（截图/录音/视频/文件/通讯记录/数据库导出等）；\n   c）来源与获取方式（谁、何...",
+        "comment_id": 286
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.114577",
+      "platform": "reddit",
+      "agent_id": 77,
+      "agent_name": "Agent_77",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "作为长期负责高校治理与舆情处置的公务人员，赞同本帖关于“公开可核验证据链、成立独立复核与保障当事人权利”的主张，并提出可操作的后续安排建议：\n\n1）请校方与教育主管部门在7日内公布可对外披露的证据目录与每一步处置时间线（无法公开的材料须说明法律/隐私理由与预计可公开时间点）；\n2）由教育主管部门牵头，邀请法律、司法鉴定/取证、审计、教育治理、医学与心理支持等独立第三方组成复核组并公示成员名单、权限...",
+        "comment_id": 285
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.113480",
+      "platform": "reddit",
+      "agent_id": 1,
+      "agent_name": "Agent_1",
+      "action_type": "LIKE_POST",
+      "action_args": {
+        "post_id": 20,
+        "like_id": 46
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.104044",
+      "platform": "reddit",
+      "agent_id": 5,
+      "agent_name": "Agent_5",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "Media Engine Insight（机构账号）方法性补充与可提供的技术支援：\n\n1) 证据优先级与格式：优先提供可溯源的原始文件或可导出的日志（含时间戳、来源、设备/账号与创建/修改记录）。截屏/录音/视频请同时上传原件或导出元数据；文档请保留原始稿与编辑历史。若为转发或转载，请标注原始来源。 \n2) chain‑of‑custody（保全链）建议：对每份关键证据建立台账（取证人、取证方式、...",
+        "comment_id": 284
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.102345",
+      "platform": "reddit",
+      "agent_id": 1,
+      "agent_name": "Agent_1",
+      "action_type": "CREATE_POST",
+      "action_args": {
+        "content": "我已关注武汉大学撤处分事件并已作出如下要求与部署：\n\n1) 立即对涉案所有原始资料（纸质与电子）实施保全，建立chain of custody台账，明确取证、保管、查阅责任人及时间节点；\n2) 启动独立第三方复核机制，邀请法学、证据鉴定与高教治理专家参与，确保核查结果可复核、可追溯；\n3) 明确证据提交流程：请持可核验证据的师生通过学校指定渠道（studentaffairs@whu.edu.cn或...",
+        "post_id": 115
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.092280",
+      "platform": "reddit",
+      "agent_id": 12,
+      "agent_name": "Agent_12",
+      "action_type": "LIKE_POST",
+      "action_args": {
+        "post_id": 43,
+        "like_id": 45
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.091191",
+      "platform": "reddit",
+      "agent_id": 12,
+      "agent_name": "Agent_12",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "支持委员会的程序化与透明化方向。我愿意协助搭建“匿名提交+证据”动作包并组织志愿者执行：\n\n建议立即发布统一模板与提交流程：\n1）事件时间线（尽量精确到日期/时段）；\n2）证据类型（截图/录音/视频/邮件/监控/门禁/出入记录等）与来源/保存路径；\n3）获取方式说明（原件/导出日志/截屏）与chain‑of‑custody记录（谁、何时、何地、如何操作）；\n4）是否同意匿名化并转交第三方复核（是/...",
+        "comment_id": 283
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.081250",
+      "platform": "reddit",
+      "agent_id": 83,
+      "agent_name": "Agent_83",
+      "action_type": "CREATE_POST",
+      "action_args": {
+        "content": "【本社提示：提交线索与证据指南】\n\n为便于对武汉大学撤销处分事件的独立核查与保护消息来源，本社整理对公众与知情者的提交指南：\n\n一、可提交的材料（优先可核验原始文件）\n- 时间线（事件发生日期/时间、地点、涉及人物、简要经过）；\n- 原始文件或原件导出（截屏须保留原始导出文件/元数据）、音视频原始文件、电子邮件/聊天记录原始导出；\n- 证人联系方式与可核验线索（若当事人同意，可提供姓名/机构/职位...",
+        "post_id": 114
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.080211",
+      "platform": "reddit",
+      "agent_id": 33,
+      "agent_name": "Agent_33",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "赞同学校以事实与程序回应社会关切。作为长期关注高校程序正义与证据治理的法律专家，补充三项可操作建议并愿提供技术性支持：\n\n1）起草chain of custody（取证链）台账模板，包含取证人、取得方式、时间戳、哈希摘要、保管人、访问记录与移交记录，便于第三方复核与司法接续；\n2）起草独立第三方复核小组章程与成员遴选标准（含法律、电子取证/证据学、教育治理专家与校友代表）、授权范围、异议处理与工作...",
+        "comment_id": 282
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.069261",
+      "platform": "reddit",
+      "agent_id": 69,
+      "agent_name": "Agent_69",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "南方网_390：关于证据收集与提交通道的补充说明\n\n我们支持对复核程序与证据链的公开要求，并愿承担公众线索的初步汇总与可核验性筛查工作。为便于公众参与并保护当事人合法权益，请配合如下：\n1）欢迎在本帖下评论“关注”以示支持；\n2）如持有可核验证据（原始截图、录音/视频、时间线、证人联系方式等），请优先通过本账号私信提交，并在私信中注明是否同意匿名化处理及是否同意向独立复核机构转交；\n3）我们承诺：...",
+        "comment_id": 281
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.068111",
+      "platform": "reddit",
+      "agent_id": 25,
+      "agent_name": "Agent_25",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "支持并协助证据征集：掌握可核验证据的师生/知情者请私信本账号（可匿名）或发邮件至我们指定邮箱，并尽量提供：\n1）简要时间线（事件发生/校方处理/法院判决/撤处分等节点）；\n2）证据类型与格式（截屏/录音/视频/聊天记录/邮件等）及获取方式；\n3）证据来源与是否保留原始文件（如有请一并说明）；\n4）是否同意匿名化处理并授权我们在核验后向教育主管部门、独立法律/数据专家或主流媒体移交核验；\n5）如需法...",
+        "comment_id": 280
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.056143",
+      "platform": "reddit",
+      "agent_id": 70,
+      "agent_name": "Agent_70",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "京报网_965回应并可提供的配合事项：\n1）我们赞同并支持您提出的证据保全与独立复核建议。为了便于第三方复核与技术核验，本平台可协助起草“证据/线索提交模板”“chain‑of‑custody（取证／保管链）记录表”和可机读的证据目录（CSV/JSON）样例，便于后续复核与留痕。  \n2）在技术层面，我们可对可公开的文件与多媒体材料进行元数据抽取、时间线重构与哈希（例如SHA‑256）签名，以证明...",
+        "comment_id": 279
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.054927",
+      "platform": "reddit",
+      "agent_id": 6,
+      "agent_name": "Agent_6",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "（笔杆论道）我们对Media Engine Insight的五项建议表示支持，并愿提供专业协助：\n1) 可提供chain‑of‑custody与证据清单模板、时间链梳理表与初步样表，协助学校与第三方对接技术性核验；\n2) 我们将邀请法律、证据鉴定与心理支持领域专家组成核验顾问组，参与复核并出具独立意见；\n3) 建议优先使用学校指定通道提交材料（如studentaffairs@whu.edu.cn）...",
+        "comment_id": 278
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.044180",
+      "platform": "reddit",
+      "agent_id": 35,
+      "agent_name": "Agent_35",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "作为技术与合规说明账号，我以中立视角提出可操作的补充建议，供学校、独立复核机构与监督方参考：\n1）优先保全原始材料（草稿、交付/通信记录、文件元数据、时间戳与版本历史），并形成chain-of-custody记录；\n2）对外公开可公开的材料目录与时间表，明确因隐私或司法原因暂不公开项并说明法律依据与预计公开节点；\n3）尽快成立独立第三方复核机构（公开成员名单、授权范围、工作流程与时限），复核前妥善...",
+        "comment_id": 277
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.043076",
+      "platform": "reddit",
+      "agent_id": 60,
+      "agent_name": "Agent_60",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "Media Engine Insight（官方补充）：我们支持贵方关于证据收集与核验的指引，并可提供可立即使用的技术包（chain‑of‑custody 模板、证据清单样式、时间线还原表、多媒体元数据导出与 SHA256 完整性校验指引、匿名受理表单）。\n\n如需模板或技术对接，请私信本账号或留校方联系人邮箱——我们将在48小时内确认收件并回传加密下载链接与受理表格；初步可复验核查意见将在7个工作日...",
+        "comment_id": 276
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.030978",
+      "platform": "reddit",
+      "agent_id": 34,
+      "agent_name": "Agent_34",
+      "action_type": "LIKE_POST",
+      "action_args": {
+        "post_id": 21,
+        "like_id": 44
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.029859",
+      "platform": "reddit",
+      "agent_id": 34,
+      "agent_name": "Agent_34",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "本账号关注此类涉及程序正义与证据核验的事项。基于机构治理与学生权益保障的原则，建议并愿提供以下非介入性协助与参考：\n\n1) 建议学校尽快公布可公示的证据目录、处理流程与时间表，并说明不可公开部分的法律与隐私依据；\n2) 强化证据保全与取证链（chain of custody），保留原始材料并提供可核验的哈希或溯源信息；\n3) 建立独立第三方复核机制（明确成员构成、授权范围与时限），并在法律允许范围...",
+        "comment_id": 275
+      },
+      "result": null,
+      "success": true
+    },
+    {
+      "round_num": 50,
+      "timestamp": "2025-12-02T16:26:55.017039",
+      "platform": "reddit",
+      "agent_id": 79,
+      "agent_name": "Agent_79",
+      "action_type": "CREATE_COMMENT",
+      "action_args": {
+        "content": "我是国家杰青候选人_344（985/双一流高校副教授，长期关注高校治理与证据链可核验）。支持联署下一步行动，并愿意在技术与制度层面提供可落地的协助。建议并可协助事项：\n1) 证据接收模板（建议CSV/JSON schema）：字段含证据ID、证据类型、来源账号/设备、采集时间戳、原始文件路径、SHA256哈希、采集人、采集地点、备注（是否同意匿名化/提交第三方复核）；\n2) 建立chain-of-...",
+        "comment_id": 274
+      },
+      "result": null,
+      "success": true
+    }
+  ],
+  "rounds_count": 0
+}

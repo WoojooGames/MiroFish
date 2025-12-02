@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiroFish 模拟结果可视化</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --bg-card: rgba(31, 41, 55, 0.7);
+            --accent-twitter: #1da1f2;
+            --accent-reddit: #ff4500;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-pink: #ec4899;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glow-twitter: rgba(29, 161, 242, 0.3);
+            --glow-reddit: rgba(255, 69, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(29, 161, 242, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 69, 0, 0.05) 0%, transparent 70%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, transparent 100%);
+            padding: 2rem 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+            border-radius: 2px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-value.twitter { color: var(--accent-twitter); }
+        .stat-value.reddit { color: var(--accent-reddit); }
+        .stat-value.purple { color: var(--accent-purple); }
+        .stat-value.green { color: var(--accent-green); }
+        .stat-value.yellow { color: var(--accent-yellow); }
+
+        /* Tabs */
+        .tabs-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: var(--bg-tertiary);
+            padding: 0.5rem;
+            border-radius: 12px;
+            width: fit-content;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .tab-btn.twitter.active {
+            background: var(--accent-twitter);
+            box-shadow: 0 4px 15px var(--glow-twitter);
+        }
+
+        .tab-btn.reddit.active {
+            background: var(--accent-reddit);
+            box-shadow: 0 4px 15px var(--glow-reddit);
+        }
+
+        /* Platform Panels */
+        .platform-panel {
+            display: none;
+        }
+
+        .platform-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Timeline */
+        .timeline-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        .timeline {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .timeline::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .timeline::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .timeline::-webkit-scrollbar-thumb {
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 1rem;
+            border-left: 2px solid var(--border-color);
+            margin-left: 1rem;
+            position: relative;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 1.25rem;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+        }
+
+        .timeline-item.twitter::before { border-color: var(--accent-twitter); }
+        .timeline-item.reddit::before { border-color: var(--accent-reddit); }
+        .timeline-item.like::before { border-color: var(--accent-pink); }
+        .timeline-item.follow::before { border-color: var(--accent-green); }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-agent {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .timeline-action {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent-purple);
+        }
+
+        .timeline-action.create { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .timeline-action.like { background: rgba(236, 72, 153, 0.2); color: var(--accent-pink); }
+        .timeline-action.follow { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); }
+        .timeline-action.quote { background: rgba(29, 161, 242, 0.2); color: var(--accent-twitter); }
+        .timeline-action.comment { background: rgba(255, 69, 0, 0.2); color: var(--accent-reddit); }
+
+        .timeline-content {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-top: 0.5rem;
+        }
+
+        .timeline-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Agent Sidebar */
+        .agent-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .agent-list {
+            max-height: 700px;
+            overflow-y: auto;
+        }
+
+        .agent-card {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .agent-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-color);
+        }
+
+        .agent-card.selected {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--accent-purple);
+        }
+
+        .agent-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .agent-type {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .agent-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Agent Detail Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .modal-body {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .modal-section {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .modal-section-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--accent-purple);
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-section-content {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-purple);
+        }
+
+        /* Config Panel */
+        .config-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .config-item {
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+        }
+
+        .config-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .config-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        /* Search */
+        .search-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--bg-tertiary);
+            border-top-color: var(--accent-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Round Filter */
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .filter-input {
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            width: 100px;
+            outline: none;
+        }
+
+        .filter-input:focus {
+            border-color: var(--accent-purple);
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--accent-purple);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--accent-pink);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .timeline-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .agent-sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🐟</div>
+                <div class="logo-text">MiroFish 模拟可视化</div>
+            </div>
+            <div class="header-info">
+                <div class="status-badge">
+                    <div class="status-dot"></div>
+                    <span id="simulation-status">加载中...</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Stats Overview -->
+        <section class="section-title">📊 模拟概览</section>
+        <div class="stats-grid" id="stats-grid">
+            <div class="loading"><div class="loading-spinner"></div></div>
+        </div>
+
+        <!-- Config Panel -->
+        <section class="section-title">⚙️ 模拟配置</section>
+        <div class="config-panel" id="config-panel">
+            <div class="loading"><div class="loading-spinner"></div></div>
+        </div>
+
+        <!-- Platform Tabs -->
+        <section class="section-title">📱 平台活动</section>
+        <div class="tabs-container">
+            <button class="tab-btn twitter active" data-platform="twitter">
+                <span>🐦</span> Twitter
+            </button>
+            <button class="tab-btn reddit" data-platform="reddit">
+                <span>🔴</span> Reddit
+            </button>
+            <button class="tab-btn" data-platform="agents">
+                <span>👥</span> Agent 档案
+            </button>
+        </div>
+
+        <!-- Twitter Panel -->
+        <div class="platform-panel active" id="twitter-panel">
+            <div class="filter-container">
+                <span class="filter-label">回合范围:</span>
+                <input type="number" class="filter-input" id="twitter-round-start" placeholder="起始" min="0">
+                <span>—</span>
+                <input type="number" class="filter-input" id="twitter-round-end" placeholder="结束" min="0">
+                <button class="filter-btn" onclick="filterTwitterActions()">筛选</button>
+                <button class="filter-btn" onclick="resetTwitterFilter()" style="background: var(--bg-tertiary);">重置</button>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline" id="twitter-timeline">
+                    <div class="loading"><div class="loading-spinner"></div></div>
+                </div>
+                <div class="agent-sidebar">
+                    <div class="section-title" style="font-size: 1rem;">活跃 Agent</div>
+                    <div class="search-container">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" id="twitter-agent-search" placeholder="搜索 Agent...">
+                    </div>
+                    <div class="agent-list" id="twitter-agents">
+                        <div class="loading"><div class="loading-spinner"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reddit Panel -->
+        <div class="platform-panel" id="reddit-panel">
+            <div class="filter-container">
+                <span class="filter-label">回合范围:</span>
+                <input type="number" class="filter-input" id="reddit-round-start" placeholder="起始" min="0">
+                <span>—</span>
+                <input type="number" class="filter-input" id="reddit-round-end" placeholder="结束" min="0">
+                <button class="filter-btn" onclick="filterRedditActions()">筛选</button>
+                <button class="filter-btn" onclick="resetRedditFilter()" style="background: var(--bg-tertiary);">重置</button>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline" id="reddit-timeline">
+                    <div class="loading"><div class="loading-spinner"></div></div>
+                </div>
+                <div class="agent-sidebar">
+                    <div class="section-title" style="font-size: 1rem;">活跃 Agent</div>
+                    <div class="search-container">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" id="reddit-agent-search" placeholder="搜索 Agent...">
+                    </div>
+                    <div class="agent-list" id="reddit-agents">
+                        <div class="loading"><div class="loading-spinner"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agents Panel -->
+        <div class="platform-panel" id="agents-panel">
+            <div class="search-container" style="max-width: 400px; margin-bottom: 1.5rem;">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="all-agent-search" placeholder="搜索 Agent 名称、类型或职业...">
+            </div>
+            <div class="agent-list" id="all-agents" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1rem; max-height: none;">
+                <div class="loading"><div class="loading-spinner"></div></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Agent Detail Modal -->
+    <div class="modal-overlay" id="agent-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title" id="modal-agent-name"></div>
+                    <div class="modal-subtitle" id="modal-agent-username"></div>
+                </div>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // Global data storage
+        let simulationConfig = null;
+        let twitterProfiles = [];
+        let redditProfiles = [];
+        let twitterActions = [];
+        let redditActions = [];
+        let filteredTwitterActions = [];
+        let filteredRedditActions = [];
+
+        // Load simulation data
+        async function loadData() {
+            try {
+                // Load simulation config
+                const configResponse = await fetch('./sim_10b494550540/simulation_config.json');
+                simulationConfig = await configResponse.json();
+
+                // Load state
+                const stateResponse = await fetch('./sim_10b494550540/state.json');
+                const state = await stateResponse.json();
+
+                // Load Twitter profiles (CSV)
+                const twitterResponse = await fetch('./sim_10b494550540/twitter_profiles.csv');
+                const twitterText = await twitterResponse.text();
+                twitterProfiles = parseCSV(twitterText);
+
+                // Load Reddit profiles (JSON)
+                const redditResponse = await fetch('./sim_10b494550540/reddit_profiles.json');
+                redditProfiles = await redditResponse.json();
+
+                // Load Twitter actions
+                const twitterActionsResponse = await fetch('./sim_10b494550540/twitter/actions.jsonl');
+                const twitterActionsText = await twitterActionsResponse.text();
+                twitterActions = parseJSONL(twitterActionsText);
+                filteredTwitterActions = [...twitterActions];
+
+                // Load Reddit actions
+                const redditActionsResponse = await fetch('./sim_10b494550540/reddit/actions.jsonl');
+                const redditActionsText = await redditActionsResponse.text();
+                redditActions = parseJSONL(redditActionsText);
+                filteredRedditActions = [...redditActions];
+
+                // Update UI
+                updateStatus(state.status);
+                renderStats();
+                renderConfig();
+                renderTwitterTimeline();
+                renderRedditTimeline();
+                renderTwitterAgents();
+                renderRedditAgents();
+                renderAllAgents();
+
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        // Parse CSV
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            const headers = lines[0].split(',');
+            const result = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let char of lines[i]) {
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        values.push(current);
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                values.push(current);
+                
+                const obj = {};
+                headers.forEach((header, index) => {
+                    obj[header] = values[index] || '';
+                });
+                result.push(obj);
+            }
+            
+            return result;
+        }
+
+        // Parse JSONL
+        function parseJSONL(text) {
+            return text.trim().split('\n')
+                .filter(line => line.trim())
+                .map(line => JSON.parse(line));
+        }
+
+        // Update status
+        function updateStatus(status) {
+            const statusEl = document.getElementById('simulation-status');
+            const statusMap = {
+                'running': '运行中',
+                'completed': '已完成',
+                'stopped': '已停止',
+                'error': '错误'
+            };
+            statusEl.textContent = statusMap[status] || status;
+        }
+
+        // Render stats
+        function renderStats() {
+            const twitterPosts = twitterActions.filter(a => a.action_type === 'CREATE_POST').length;
+            const twitterQuotes = twitterActions.filter(a => a.action_type === 'QUOTE_POST').length;
+            const twitterLikes = twitterActions.filter(a => a.action_type === 'LIKE_POST').length;
+            const twitterFollows = twitterActions.filter(a => a.action_type === 'FOLLOW').length;
+            
+            const redditPosts = redditActions.filter(a => a.action_type === 'CREATE_POST').length;
+            const redditComments = redditActions.filter(a => a.action_type === 'CREATE_COMMENT').length;
+            const redditLikes = redditActions.filter(a => a.action_type === 'LIKE_POST').length;
+
+            const maxRound = Math.max(
+                ...twitterActions.filter(a => a.round !== undefined).map(a => a.round),
+                ...redditActions.filter(a => a.round !== undefined).map(a => a.round)
+            );
+
+            document.getElementById('stats-grid').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-label">Agent 总数</div>
+                    <div class="stat-value purple">${simulationConfig?.agent_configs?.length || 0}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">模拟回合</div>
+                    <div class="stat-value green">${maxRound || 0}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Twitter 发帖</div>
+                    <div class="stat-value twitter">${twitterPosts}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Twitter 转发</div>
+                    <div class="stat-value twitter">${twitterQuotes}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Reddit 发帖</div>
+                    <div class="stat-value reddit">${redditPosts}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Reddit 评论</div>
+                    <div class="stat-value reddit">${redditComments}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">总点赞数</div>
+                    <div class="stat-value yellow">${twitterLikes + redditLikes}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">总关注数</div>
+                    <div class="stat-value green">${twitterFollows}</div>
+                </div>
+            `;
+        }
+
+        // Render config
+        function renderConfig() {
+            const config = simulationConfig;
+            if (!config) return;
+
+            const timeConfig = config.time_config || {};
+            
+            document.getElementById('config-panel').innerHTML = `
+                <div class="config-grid">
+                    <div class="config-item">
+                        <div class="config-label">模拟 ID</div>
+                        <div class="config-value">${config.simulation_id || 'N/A'}</div>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-label">模拟需求</div>
+                        <div class="config-value">${config.simulation_requirement || 'N/A'}</div>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-label">总模拟时长</div>
+                        <div class="config-value">${timeConfig.total_simulation_hours || 0} 小时</div>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-label">每回合时长</div>
+                        <div class="config-value">${timeConfig.minutes_per_round || 0} 分钟</div>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-label">高峰时段</div>
+                        <div class="config-value">${(timeConfig.peak_hours || []).join(', ')} 点</div>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-label">高峰活跃倍数</div>
+                        <div class="config-value">${timeConfig.peak_activity_multiplier || 1}x</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Get action type class
+        function getActionClass(actionType) {
+            const classMap = {
+                'CREATE_POST': 'create',
+                'QUOTE_POST': 'quote',
+                'LIKE_POST': 'like',
+                'FOLLOW': 'follow',
+                'CREATE_COMMENT': 'comment'
+            };
+            return classMap[actionType] || '';
+        }
+
+        // Get action type label
+        function getActionLabel(actionType) {
+            const labelMap = {
+                'CREATE_POST': '发帖',
+                'QUOTE_POST': '转发',
+                'LIKE_POST': '点赞',
+                'FOLLOW': '关注',
+                'CREATE_COMMENT': '评论'
+            };
+            return labelMap[actionType] || actionType;
+        }
+
+        // Render Twitter timeline
+        function renderTwitterTimeline() {
+            const container = document.getElementById('twitter-timeline');
+            const actions = filteredTwitterActions.filter(a => a.action_type && !a.event_type);
+            
+            if (actions.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">暂无活动记录</div>';
+                return;
+            }
+
+            container.innerHTML = actions.slice(0, 200).map(action => {
+                const content = action.action_args?.content || '';
+                const truncatedContent = content.length > 200 ? content.substring(0, 200) + '...' : content;
+                
+                return `
+                    <div class="timeline-item twitter ${getActionClass(action.action_type)}">
+                        <div class="timeline-header">
+                            <span class="timeline-agent">${action.agent_name || `Agent_${action.agent_id}`}</span>
+                            <span class="timeline-action ${getActionClass(action.action_type)}">${getActionLabel(action.action_type)}</span>
+                        </div>
+                        ${truncatedContent ? `<div class="timeline-content">${truncatedContent}</div>` : ''}
+                        <div class="timeline-meta">回合 ${action.round} · ${action.timestamp?.split('T')[1]?.split('.')[0] || ''}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render Reddit timeline
+        function renderRedditTimeline() {
+            const container = document.getElementById('reddit-timeline');
+            const actions = filteredRedditActions.filter(a => a.action_type && !a.event_type);
+            
+            if (actions.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">暂无活动记录</div>';
+                return;
+            }
+
+            container.innerHTML = actions.slice(0, 200).map(action => {
+                const content = action.action_args?.content || '';
+                const truncatedContent = content.length > 200 ? content.substring(0, 200) + '...' : content;
+                
+                return `
+                    <div class="timeline-item reddit ${getActionClass(action.action_type)}">
+                        <div class="timeline-header">
+                            <span class="timeline-agent">${action.agent_name || `Agent_${action.agent_id}`}</span>
+                            <span class="timeline-action ${getActionClass(action.action_type)}">${getActionLabel(action.action_type)}</span>
+                        </div>
+                        ${truncatedContent ? `<div class="timeline-content">${truncatedContent}</div>` : ''}
+                        <div class="timeline-meta">回合 ${action.round} · ${action.timestamp?.split('T')[1]?.split('.')[0] || ''}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Get agent stats
+        function getAgentStats(agentId, actions) {
+            const agentActions = actions.filter(a => a.agent_id === agentId);
+            return {
+                posts: agentActions.filter(a => a.action_type === 'CREATE_POST').length,
+                interactions: agentActions.filter(a => ['QUOTE_POST', 'LIKE_POST', 'FOLLOW', 'CREATE_COMMENT'].includes(a.action_type)).length
+            };
+        }
+
+        // Render Twitter agents
+        function renderTwitterAgents() {
+            const container = document.getElementById('twitter-agents');
+            const agentIds = [...new Set(twitterActions.filter(a => a.agent_id !== undefined).map(a => a.agent_id))];
+            
+            const agentsWithStats = agentIds.map(id => {
+                const config = simulationConfig?.agent_configs?.find(c => c.agent_id === id);
+                const profile = twitterProfiles.find(p => parseInt(p.user_id) === id);
+                const stats = getAgentStats(id, twitterActions);
+                return { id, config, profile, stats };
+            }).sort((a, b) => (b.stats.posts + b.stats.interactions) - (a.stats.posts + a.stats.interactions));
+
+            container.innerHTML = agentsWithStats.slice(0, 50).map(agent => `
+                <div class="agent-card" onclick="showAgentDetail(${agent.id}, 'twitter')">
+                    <div class="agent-name">${agent.profile?.name || agent.config?.entity_name || `Agent_${agent.id}`}</div>
+                    <div class="agent-type">${agent.config?.entity_type || 'Unknown'}</div>
+                    <div class="agent-stats">
+                        <span>📝 ${agent.stats.posts} 帖</span>
+                        <span>💬 ${agent.stats.interactions} 互动</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add search functionality
+            document.getElementById('twitter-agent-search').addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                const cards = container.querySelectorAll('.agent-card');
+                cards.forEach(card => {
+                    const name = card.querySelector('.agent-name').textContent.toLowerCase();
+                    card.style.display = name.includes(query) ? 'block' : 'none';
+                });
+            });
+        }
+
+        // Render Reddit agents
+        function renderRedditAgents() {
+            const container = document.getElementById('reddit-agents');
+            const agentIds = [...new Set(redditActions.filter(a => a.agent_id !== undefined).map(a => a.agent_id))];
+            
+            const agentsWithStats = agentIds.map(id => {
+                const config = simulationConfig?.agent_configs?.find(c => c.agent_id === id);
+                const profile = redditProfiles.find(p => redditProfiles.indexOf(p) === id);
+                const stats = getAgentStats(id, redditActions);
+                return { id, config, profile, stats };
+            }).sort((a, b) => (b.stats.posts + b.stats.interactions) - (a.stats.posts + a.stats.interactions));
+
+            container.innerHTML = agentsWithStats.slice(0, 50).map(agent => `
+                <div class="agent-card" onclick="showAgentDetail(${agent.id}, 'reddit')">
+                    <div class="agent-name">${agent.profile?.realname || agent.config?.entity_name || `Agent_${agent.id}`}</div>
+                    <div class="agent-type">${agent.config?.entity_type || 'Unknown'}</div>
+                    <div class="agent-stats">
+                        <span>📝 ${agent.stats.posts} 帖</span>
+                        <span>💬 ${agent.stats.interactions} 互动</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add search functionality
+            document.getElementById('reddit-agent-search').addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                const cards = container.querySelectorAll('.agent-card');
+                cards.forEach(card => {
+                    const name = card.querySelector('.agent-name').textContent.toLowerCase();
+                    card.style.display = name.includes(query) ? 'block' : 'none';
+                });
+            });
+        }
+
+        // Render all agents
+        function renderAllAgents() {
+            const container = document.getElementById('all-agents');
+            const configs = simulationConfig?.agent_configs || [];
+            
+            container.innerHTML = configs.map(config => {
+                const redditProfile = redditProfiles[config.agent_id];
+                const twitterProfile = twitterProfiles.find(p => parseInt(p.user_id) === config.agent_id);
+                const name = redditProfile?.realname || twitterProfile?.name || config.entity_name;
+                const profession = redditProfile?.profession || '';
+                
+                return `
+                    <div class="agent-card" onclick="showAgentDetail(${config.agent_id}, 'all')" style="background: var(--bg-card); border: 1px solid var(--border-color);">
+                        <div class="agent-name">${name}</div>
+                        <div class="agent-type">${config.entity_type}</div>
+                        ${profession ? `<div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">${profession.substring(0, 80)}...</div>` : ''}
+                        <div class="agent-stats">
+                            <span>⚡ 活跃度: ${(config.activity_level * 100).toFixed(0)}%</span>
+                            <span>📊 影响力: ${config.influence_weight}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Add search functionality
+            document.getElementById('all-agent-search').addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                const cards = container.querySelectorAll('.agent-card');
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    card.style.display = text.includes(query) ? 'block' : 'none';
+                });
+            });
+        }
+
+        // Show agent detail modal
+        function showAgentDetail(agentId, platform) {
+            const config = simulationConfig?.agent_configs?.find(c => c.agent_id === agentId);
+            const redditProfile = redditProfiles[agentId];
+            const twitterProfile = twitterProfiles.find(p => parseInt(p.user_id) === agentId);
+            
+            const name = redditProfile?.realname || twitterProfile?.name || config?.entity_name || `Agent_${agentId}`;
+            const username = redditProfile?.username || twitterProfile?.username || '';
+            
+            document.getElementById('modal-agent-name').textContent = name;
+            document.getElementById('modal-agent-username').textContent = username ? `@${username}` : '';
+            
+            let bodyHTML = '';
+            
+            // Basic info section
+            if (redditProfile) {
+                bodyHTML += `
+                    <div class="modal-section">
+                        <div class="modal-section-title">📋 基本信息</div>
+                        <div class="modal-section-content">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                ${redditProfile.age ? `<div><strong>年龄:</strong> ${redditProfile.age}</div>` : ''}
+                                ${redditProfile.gender ? `<div><strong>性别:</strong> ${redditProfile.gender === 'male' ? '男' : redditProfile.gender === 'female' ? '女' : '其他'}</div>` : ''}
+                                ${redditProfile.mbti ? `<div><strong>MBTI:</strong> ${redditProfile.mbti}</div>` : ''}
+                                ${redditProfile.country ? `<div><strong>国家:</strong> ${redditProfile.country}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Bio section
+            const bio = redditProfile?.bio || twitterProfile?.description?.split(' ')[0] || '';
+            if (bio) {
+                bodyHTML += `
+                    <div class="modal-section">
+                        <div class="modal-section-title">📝 简介</div>
+                        <div class="modal-section-content">${bio}</div>
+                    </div>
+                `;
+            }
+            
+            // Topics section
+            if (redditProfile?.interested_topics?.length > 0) {
+                bodyHTML += `
+                    <div class="modal-section">
+                        <div class="modal-section-title">🏷️ 关注话题</div>
+                        <div class="tag-list">
+                            ${redditProfile.interested_topics.map(topic => `<span class="tag">${topic}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Config section
+            if (config) {
+                bodyHTML += `
+                    <div class="modal-section">
+                        <div class="modal-section-title">⚙️ 模拟配置</div>
+                        <div class="modal-section-content">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                                <div><strong>实体类型:</strong> ${config.entity_type}</div>
+                                <div><strong>活跃度:</strong> ${(config.activity_level * 100).toFixed(0)}%</div>
+                                <div><strong>每小时发帖:</strong> ${config.posts_per_hour}</div>
+                                <div><strong>每小时评论:</strong> ${config.comments_per_hour}</div>
+                                <div><strong>影响力权重:</strong> ${config.influence_weight}</div>
+                                <div><strong>立场:</strong> ${config.stance}</div>
+                                <div><strong>情感倾向:</strong> ${config.sentiment_bias}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('modal-body').innerHTML = bodyHTML;
+            document.getElementById('agent-modal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('agent-modal').classList.remove('active');
+        }
+
+        // Filter functions
+        function filterTwitterActions() {
+            const start = parseInt(document.getElementById('twitter-round-start').value) || 0;
+            const end = parseInt(document.getElementById('twitter-round-end').value) || Infinity;
+            filteredTwitterActions = twitterActions.filter(a => a.round >= start && a.round <= end);
+            renderTwitterTimeline();
+        }
+
+        function resetTwitterFilter() {
+            document.getElementById('twitter-round-start').value = '';
+            document.getElementById('twitter-round-end').value = '';
+            filteredTwitterActions = [...twitterActions];
+            renderTwitterTimeline();
+        }
+
+        function filterRedditActions() {
+            const start = parseInt(document.getElementById('reddit-round-start').value) || 0;
+            const end = parseInt(document.getElementById('reddit-round-end').value) || Infinity;
+            filteredRedditActions = redditActions.filter(a => a.round >= start && a.round <= end);
+            renderRedditTimeline();
+        }
+
+        function resetRedditFilter() {
+            document.getElementById('reddit-round-start').value = '';
+            document.getElementById('reddit-round-end').value = '';
+            filteredRedditActions = [...redditActions];
+            renderRedditTimeline();
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const platform = this.dataset.platform;
+                
+                // Update active tab
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update panels
+                document.querySelectorAll('.platform-panel').forEach(p => p.classList.remove('active'));
+                document.getElementById(`${platform}-panel`).classList.add('active');
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('agent-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Close modal on escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initialize
+        loadData();
+    </script>
+</body>
+</html>
+
