@@ -48,6 +48,16 @@ def create_app(config_class=Config):
     if should_log_startup:
         logger.info("已注册模拟进程清理函数")
     
+    # API Key 认证中间件
+    @app.before_request
+    def check_api_key():
+        api_key = os.environ.get('MIROFISH_API_KEY')
+        if api_key and request.path.startswith('/api/'):
+            provided_key = request.headers.get('X-API-Key', '')
+            if provided_key != api_key:
+                from flask import jsonify
+                return jsonify({'error': 'Unauthorized', 'message': 'Invalid or missing API key'}), 401
+
     # 请求日志中间件
     @app.before_request
     def log_request():
