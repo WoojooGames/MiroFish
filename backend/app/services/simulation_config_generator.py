@@ -250,10 +250,11 @@ class SimulationConfigGenerator:
         enable_twitter: bool = True,
         enable_reddit: bool = True,
         progress_callback: Optional[Callable[[int, int, str], None]] = None,
+        time_override: Optional[Dict[str, Any]] = None,
     ) -> SimulationParameters:
         """
         智能生成完整的模拟配置（分步生成）
-        
+
         Args:
             simulation_id: 模拟ID
             project_id: 项目ID
@@ -264,7 +265,8 @@ class SimulationConfigGenerator:
             enable_twitter: 是否启用Twitter
             enable_reddit: 是否启用Reddit
             progress_callback: 进度回调函数(current_step, total_steps, message)
-            
+            time_override: 시간 설정 오버라이드 (전략별 시뮬레이션 시간 조정용)
+
         Returns:
             SimulationParameters: 完整的模拟参数
         """
@@ -296,6 +298,14 @@ class SimulationConfigGenerator:
         num_entities = len(entities)
         time_config_result = self._generate_time_config(context, num_entities)
         time_config = self._parse_time_config(time_config_result, num_entities)
+
+        # 전략별 시간 오버라이드 적용
+        if time_override:
+            for key, val in time_override.items():
+                if hasattr(time_config, key):
+                    setattr(time_config, key, val)
+            logger.info(f"시간 오버라이드 적용: {time_override}")
+
         reasoning_parts.append(f"时间配置: {time_config_result.get('reasoning', '成功')}")
         
         # ========== 步骤2: 生成事件配置 ==========
