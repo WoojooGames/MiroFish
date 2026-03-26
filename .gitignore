@@ -56,5 +56,9 @@ backend/logs/
 # 上传文件
 backend/uploads/
 
+# Database
+*.db
+*.sqlite3
+
 # Docker 数据
 data/
